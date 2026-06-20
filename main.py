@@ -1387,16 +1387,17 @@ HORIZON_DEFAULT_COLOR = "#95A5A6"  # gris : sans horizon
 BIFURCATION_COLOR = "#8E44AD"      # violet
 BIFURCATION_NULL_COLOR = "#BDC3C7"  # gris : tension inconnue
 EDGE_COLOR = "#7F8C8D"
-SCENE_BG = "#FAFAFA"
+SCENE_BG = "#161B24"
 
-# Palette « arbre des possibles » (Phase 2, rendu organique)
-TRUNK_COLOR = "#5C3A1E"     # écorce du tronc (foncé)
-BRANCH_COLOR = "#7C5436"    # écorce des branches
-BRANCH_LIGHT = "#9C7248"    # branches fines
+# Palette « arbre des possibles » (Phase 2, rendu organique) — fond sombre
+TRUNK_COLOR = "#8A5A30"     # écorce du tronc (éclaircie pour fond sombre)
+BRANCH_COLOR = "#A0703F"    # écorce des branches
+BRANCH_LIGHT = "#C08F55"    # branches fines
 FOLIAGE_COLOR = "#7FB069"   # feuillage (vert)
-SKY_TOP = "#EAF4FB"         # haut du ciel
-SKY_BOTTOM = "#F6F1E7"      # bas (terre claire)
-KNOT_COLOR = "#6E4B2A"      # nœud de bifurcation (fourche)
+SKY_TOP = "#1E2632"         # haut du ciel (sombre)
+SKY_BOTTOM = "#12161E"      # bas (sombre)
+KNOT_COLOR = "#A0703F"      # nœud de bifurcation (fourche)
+CANVAS_TEXT = "#D6DEE8"     # texte clair sur canvas sombre
 
 
 def horizon_color_map(db, project_id):
@@ -1581,7 +1582,7 @@ class HypothesisNode(_InteractiveNode, QGraphicsEllipseItem):
             cap_font = QFont()
             cap_font.setPointSize(9)
             cap.setFont(cap_font)
-            cap.setBrush(QBrush(QColor("#2C3E50")))
+            cap.setBrush(QBrush(QColor(CANVAS_TEXT)))
             cbr = cap.boundingRect()
             cap.setPos(-cbr.width() / 2, r + 6)
 
@@ -2013,7 +2014,7 @@ class TreeView(QGraphicsView):
         ff.setBold(True)
         ff.setPointSize(11)
         faits.setFont(ff)
-        faits.setBrush(QBrush(QColor(TRUNK_COLOR)))
+        faits.setBrush(QBrush(QColor(CANVAS_TEXT)))
         fbr = faits.boundingRect()
         faits.setPos(cx - fbr.width() / 2, TRUNK_LEN + 8)
         faits.setZValue(1)
@@ -4258,60 +4259,61 @@ APP_QSS = """
 * { font-size: 13px; }
 
 QMainWindow, QDialog, QWidget {
-    background: #FAFAF7;
-    color: #2C3E50;
+    background: #1B2330;
+    color: #E6EBF1;
 }
-QStackedWidget, QStackedWidget > QWidget { background: #FAFAF7; }
+QStackedWidget, QStackedWidget > QWidget { background: #1B2330; }
 
-QMenuBar { background: #F4F1EA; color: #2C3E50; }
+QMenuBar { background: #232C3A; color: #E6EBF1; }
 QMenuBar::item { background: transparent; padding: 4px 10px; }
-QMenuBar::item:selected { background: #E4DECF; }
-QMenu { background: #FCFBF7; color: #2C3E50; border: 1px solid #D8D2C4; }
-QMenu::item:selected { background: #7FB069; color: white; }
-QMenu::item:disabled { color: #AAB2BD; }
+QMenuBar::item:selected { background: #2E3A4D; }
+QMenu { background: #232C3A; color: #E6EBF1; border: 1px solid #36425A; }
+QMenu::item:selected { background: #7FB069; color: #14202A; }
+QMenu::item:disabled { color: #6A7689; }
 
-QToolBar { background: #F4F1EA; border: 0; padding: 4px; spacing: 6px; }
-QToolButton { color: #2C3E50; padding: 4px 8px; border-radius: 6px; background: transparent; }
-QToolButton:hover { background: #E4DECF; }
-QToolButton:disabled { color: #AAB2BD; }
+QToolBar { background: #232C3A; border: 0; padding: 4px; spacing: 6px; }
+QToolButton { color: #E6EBF1; padding: 4px 8px; border-radius: 6px; background: transparent; }
+QToolButton:hover { background: #2E3A4D; }
+QToolButton:disabled { color: #6A7689; }
 
-QStatusBar { background: #F4F1EA; color: #2C3E50; }
+QStatusBar { background: #232C3A; color: #C3CCD8; }
 QStatusBar::item { border: 0; }
 
-QLabel { color: #2C3E50; background: transparent; }
+QLabel { color: #E6EBF1; background: transparent; }
 
-QListWidget { background: #FCFBF7; color: #2C3E50; border: 1px solid #E0DCD0; }
+QListWidget { background: #202836; color: #E6EBF1; border: 1px solid #36425A; }
 QListWidget::item { padding: 6px; }
-QListWidget::item:selected { background: #7FB069; color: white; }
+QListWidget::item:selected { background: #7FB069; color: #14202A; }
 
 QPushButton {
-    background: #7FB069; color: white; border: 0; border-radius: 6px;
-    padding: 6px 12px;
+    background: #7FB069; color: #14202A; border: 0; border-radius: 6px;
+    padding: 6px 12px; font-weight: bold;
 }
-QPushButton:hover { background: #6FA059; }
-QPushButton:disabled { background: #BDC3C7; color: #ECF0F1; }
+QPushButton:hover { background: #8FC079; }
+QPushButton:disabled { background: #3A4659; color: #7A8699; }
 
 QLineEdit, QPlainTextEdit, QTextEdit, QTextBrowser, QComboBox,
 QSpinBox, QDoubleSpinBox {
-    background: #FFFFFF; color: #2C3E50;
-    border: 1px solid #D8D2C4; border-radius: 4px; padding: 3px;
-    selection-background-color: #7FB069; selection-color: white;
+    background: #2A3343; color: #E6EBF1;
+    border: 1px solid #3A4659; border-radius: 4px; padding: 3px;
+    selection-background-color: #7FB069; selection-color: #14202A;
 }
 QComboBox QAbstractItemView {
-    background: #FFFFFF; color: #2C3E50; selection-background-color: #7FB069;
+    background: #2A3343; color: #E6EBF1; selection-background-color: #7FB069;
+    selection-color: #14202A;
 }
 
-QGraphicsView { background: #FAFAFA; border: 1px solid #E0DCD0; }
+QGraphicsView { background: #161B24; border: 1px solid #36425A; }
 
-QDockWidget { color: #2C3E50; }
-QDockWidget::title { background: #F4F1EA; padding: 6px; }
+QDockWidget { color: #E6EBF1; }
+QDockWidget::title { background: #232C3A; padding: 6px; }
 
-QScrollBar:vertical, QScrollBar:horizontal { background: #F0ECE2; }
-QScrollBar::handle { background: #C9C1AE; border-radius: 4px; }
+QScrollBar:vertical, QScrollBar:horizontal { background: #1B2330; }
+QScrollBar::handle { background: #3A4659; border-radius: 4px; }
 
-QToolTip { background: #2C3E50; color: white; border: 0; padding: 4px; }
-QCheckBox { color: #2C3E50; }
-QMessageBox, QMessageBox QLabel { background: #FAFAF7; color: #2C3E50; }
+QToolTip { background: #0F141C; color: #E6EBF1; border: 1px solid #36425A; padding: 4px; }
+QCheckBox { color: #E6EBF1; }
+QMessageBox, QMessageBox QLabel { background: #1B2330; color: #E6EBF1; }
 """
 
 
